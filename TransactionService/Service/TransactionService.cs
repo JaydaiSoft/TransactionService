@@ -45,8 +45,21 @@ namespace TransactionServices.Service
             TransactionResponsModel response = new TransactionResponsModel();
             try
             {
-                var enitityModel = _mapper.Map<List<TransactionModel>, List<Transactions>>(requestModel.filter);
+                var enitityModel = _mapper.Map<List<TransactionModel>, List<Transactions>>(requestModel.uploadModel);
+                enitityModel = ConvertTransactionStatus(enitityModel);
                 var result = await _repository.UploadTransaction(enitityModel);
+                if (result > 0)
+                {
+                    response.Status = "OK";
+                    response.Message = "Upload Transactions Successfully!";
+                    response.ResponseDate = DateTime.Now;
+                }
+                else
+                {
+                    response.Status = "Failed";
+                    response.Message = "Can't Upload Transactions";
+                    response.ResponseDate = DateTime.Now;
+                }
             }
             catch (Exception ex)
             {
@@ -54,6 +67,26 @@ namespace TransactionServices.Service
                 response.Message = ex.GetBaseException().Message;
             }
             return response;
+        }
+
+        private List<Transactions> ConvertTransactionStatus(List<Transactions> enitityModel)
+        {
+            foreach(var model in enitityModel)
+            {
+                if(model.Status == "Approved")
+                {
+                    model.Status = "A";
+                }
+                else if(model.Status == "Failed" || model.Status == "Rejected")
+                {
+                    model.Status = "R";
+                }
+                else if (model.Status == "Finished" || model.Status == "Done")
+                {
+                    model.Status = "D";
+                }
+            }
+            return enitityModel;
         }
     }
 }

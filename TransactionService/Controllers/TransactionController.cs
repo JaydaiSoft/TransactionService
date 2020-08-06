@@ -58,11 +58,17 @@ namespace TransactionServices.Controllers
             try
             {
                 responseModel = await transactionService.UploadTransaction(model);
-            }
-            catch (Exception)
-            {
+                if (responseModel.Status == "OK")
+                    return Ok(responseModel);
 
-                throw;
+                if (responseModel.Status == "Failed")
+                    return BadRequest(responseModel);
+            }
+            catch (Exception ex)
+            {
+                responseModel.Status = "Error";
+                responseModel.Message = ex.GetBaseException().Message;
+                return StatusCode(500, ex.GetBaseException());
             }
 
             return responseModel;
