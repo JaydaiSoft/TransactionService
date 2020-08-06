@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TransactionService.Model.Entity;
+using TransactionServices.Model.Entity;
 
-namespace TransactionService.Repository
+namespace TransactionServices.Repository
 {
     public interface ITransactionRepository
     {

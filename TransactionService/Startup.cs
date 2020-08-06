@@ -15,9 +15,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using TransactionService.Logging;
+using TransactionServices.Logging;
+using TransactionServices.Repository;
+using TransactionServices.Service;
 
-namespace TransactionService
+namespace TransactionServices
 {
     public class Startup
     {
@@ -54,10 +56,10 @@ namespace TransactionService
 
             // Add configuration for DbContext
             // Use connection string from appsettings.json file
-            //services.AddDbContext<QuotationContext>(options =>
-            //{
-            //    options.UseSqlServer(DBConnectionString);
-            //});
+            services.AddDbContext<TransactionContext>(options =>
+            {
+                options.UseSqlServer(DBConnectionString);
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -95,9 +97,9 @@ namespace TransactionService
             // You must have the call to AddAutofac in the Program.Main
             // method or this won't be called.
             builder.RegisterType<LogManager>().As<ILogManager>();
-            //builder.RegisterType<QuotationService>().As<IQuotationService>().InstancePerLifetimeScope();
-            //builder.RegisterType<QuotationRepository>().As<IQuotationRepository>().InstancePerLifetimeScope();
-            //builder.RegisterType<QuotationContext>().As<IQuotationContext>().InstancePerLifetimeScope();
+            builder.RegisterType<TransactionService>().As<ITransactionService>().InstancePerLifetimeScope();
+            builder.RegisterType<TransactionRepository>().As<ITransactionRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<TransactionContext>().As<ITransactionContext>().InstancePerLifetimeScope();
             builder.RegisterType<Mapper>().As<IMapper>().InstancePerLifetimeScope();
         }
 

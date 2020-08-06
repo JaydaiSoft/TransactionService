@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TransactionService.Model.Entity;
-using TransactionService.Model.ViewModel;
+using TransactionServices.Model.Entity;
+using TransactionServices.Model.ViewModel;
 
-namespace TransactionService.Mapping
+namespace TransactionServices.Mapping
 {
     public class AutoMapping : Profile
     {
