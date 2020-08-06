@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using TransactionService.Logging;
 
 namespace TransactionService
 {
@@ -93,11 +94,11 @@ namespace TransactionService
             //
             // You must have the call to AddAutofac in the Program.Main
             // method or this won't be called.
-            //builder.RegisterType<LogManager>().As<ILogManager>();
+            builder.RegisterType<LogManager>().As<ILogManager>();
             //builder.RegisterType<QuotationService>().As<IQuotationService>().InstancePerLifetimeScope();
             //builder.RegisterType<QuotationRepository>().As<IQuotationRepository>().InstancePerLifetimeScope();
             //builder.RegisterType<QuotationContext>().As<IQuotationContext>().InstancePerLifetimeScope();
-            //builder.RegisterType<Mapper>().As<IMapper>().InstancePerLifetimeScope();
+            builder.RegisterType<Mapper>().As<IMapper>().InstancePerLifetimeScope();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
