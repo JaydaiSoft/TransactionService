@@ -23,6 +23,13 @@ namespace TransactionServices.Repository
             return await context.TransactionEntity.ToListAsync();
         }
 
+        public async Task<int> UploadTransaction(List<Transactions> transactions)
+        {
+            await context.TransactionEntity.AddRangeAsync(transactions);
+            var success = await context.SaveChangesAsync();
+            return success;
+        }
+
         public void Commit()
         {
             context.SaveChanges();

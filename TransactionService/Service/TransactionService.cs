@@ -39,5 +39,21 @@ namespace TransactionServices.Service
             }
             return response;
         }
+
+        public async Task<TransactionResponsModel> UploadTransaction(TransactionRequestModel requestModel)
+        {
+            TransactionResponsModel response = new TransactionResponsModel();
+            try
+            {
+                var enitityModel = _mapper.Map<List<TransactionModel>, List<Transactions>>(requestModel.filter);
+                var result = await _repository.UploadTransaction(enitityModel);
+            }
+            catch (Exception ex)
+            {
+                response.Status = "Error";
+                response.Message = ex.GetBaseException().Message;
+            }
+            return response;
+        }
     }
 }

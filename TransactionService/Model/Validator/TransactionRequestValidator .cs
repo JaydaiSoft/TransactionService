@@ -24,9 +24,9 @@ namespace TransactionServices.Model.Validator
             RuleFor(request => request.filter)
                    .Must(collection => collection == null || collection.All(item => BeAValidDate(item.TransactionDate.ToString())))
                    .WithMessage("TransactionDate is mandatory.");
-            RuleFor(request => request.filter)
-                   .Must(collection => collection == null || collection.All(item => (!string.IsNullOrEmpty(item.Status) && item.Status.Length == 1)))
-                   .WithMessage("Status is mandatory.");
+            //RuleFor(request => request.filter)
+            //       .Must(collection => collection == null || collection.All(item => (!string.IsNullOrEmpty(item.Status) && item.Status.Length == 1)))
+            //       .WithMessage("Status is mandatory.");
         }
 
         private bool BeAValidDate(string value)

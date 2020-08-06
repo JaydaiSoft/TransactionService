@@ -9,5 +9,6 @@ namespace TransactionServices.Service
     public interface ITransactionService
     {
         Task<TransactionResponsModel> GetAllTransactionAsync();
+        Task<TransactionResponsModel> UploadTransaction(TransactionRequestModel requestModel);
     }
 }

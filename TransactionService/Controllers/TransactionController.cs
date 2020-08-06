@@ -52,12 +52,12 @@ namespace TransactionServices.Controllers
         }
 
         [HttpPost, Route("uploadtransactions")]
-        public ActionResult<TransactionResponsModel> UploadTransaction([FromBody] TransactionRequestModel model)
+        public async Task<ActionResult<TransactionResponsModel>> UploadTransaction([FromBody] TransactionRequestModel model)
         {
             TransactionResponsModel responseModel = new TransactionResponsModel();
             try
             {
-                
+                responseModel = await transactionService.UploadTransaction(model);
             }
             catch (Exception)
             {
