@@ -50,5 +50,22 @@ namespace TransactionServices.Controllers
                 return StatusCode(500, ex.GetBaseException());
             }
         }
+
+        [HttpPost, Route("uploadtransactions")]
+        public ActionResult<TransactionResponsModel> UploadTransaction([FromBody] TransactionRequestModel model)
+        {
+            TransactionResponsModel responseModel = new TransactionResponsModel();
+            try
+            {
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return responseModel;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace TransactionServices.Model.ViewModel
         public DateTime ToTransactionDate { get; set; }
         public string CurrencyCode { get; set; }
         public string Status { get; set; }
+        public List<TransactionModel> filter { get; set; }
     }
 }

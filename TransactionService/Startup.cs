@@ -18,6 +18,8 @@ using Microsoft.OpenApi.Models;
 using TransactionServices.Logging;
 using TransactionServices.Repository;
 using TransactionServices.Service;
+using TransactionServices.Model.Validator;
+using FluentValidation.AspNetCore;
 
 namespace TransactionServices
 {
@@ -39,6 +41,7 @@ namespace TransactionServices
             //Display EnvironmentVariable
             Console.WriteLine(string.Format("Database:{0}", DBConnectionString));
 
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<TransactionRequestValidator>());
             services.AddAutoMapper(typeof(Startup));
             services.AddCors(options =>
             {
