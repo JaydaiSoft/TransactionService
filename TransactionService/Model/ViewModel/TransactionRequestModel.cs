@@ -11,6 +11,15 @@ namespace TransactionServices.Model.ViewModel
         public DateTime ToTransactionDate { get; set; }
         public string CurrencyCode { get; set; }
         public string Status { get; set; }
-        public List<TransactionModel> uploadModel { get; set; }
+        public List<TransactionPayload> TransactionPayloads { get; set; }
+    }
+
+    public class TransactionPayload
+    {
+        public string TransactionId { get; set; }
+        public decimal Amount { get; set; }
+        public string CurrencyCode { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -12,16 +12,16 @@ namespace TransactionServices.Model.Validator
     {
         public TransactionRequestValidator()
         {
-            RuleFor(request => request.uploadModel)
+            RuleFor(request => request.TransactionPayloads)
                    .Must(collection => collection == null || collection.All(item => !string.IsNullOrEmpty(item.TransactionId)))
                    .WithMessage("TransactionId is mandatory.");
-            RuleFor(request => request.uploadModel)
+            RuleFor(request => request.TransactionPayloads)
                    .Must(collection => collection == null || collection.All(item => item.Amount > 0))
                    .WithMessage("Amount is mandatory and must have value more than zero.");
-            RuleFor(request => request.uploadModel)
+            RuleFor(request => request.TransactionPayloads)
                    .Must(collection => collection == null || collection.All(item => (!string.IsNullOrEmpty(item.CurrencyCode) && item.CurrencyCode.Length == 3)))
                    .WithMessage("CurrencyCode is mandatory.");
-            RuleFor(request => request.uploadModel)
+            RuleFor(request => request.TransactionPayloads)
                    .Must(collection => collection == null || collection.All(item => BeAValidDate(item.TransactionDate.ToString())))
                    .WithMessage("TransactionDate is mandatory.");
             //RuleFor(request => request.filter)

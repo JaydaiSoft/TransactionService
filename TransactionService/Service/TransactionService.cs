@@ -45,7 +45,7 @@ namespace TransactionServices.Service
             TransactionResponsModel response = new TransactionResponsModel();
             try
             {
-                var enitityModel = _mapper.Map<List<TransactionModel>, List<Transactions>>(requestModel.uploadModel);
+                var enitityModel = _mapper.Map<List<TransactionPayload>, List<Transactions>>(requestModel.TransactionPayloads);
                 enitityModel = ConvertTransactionStatus(enitityModel);
                 var result = await _repository.UploadTransaction(enitityModel);
                 if (result > 0)

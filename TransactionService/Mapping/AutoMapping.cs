@@ -19,6 +19,14 @@ namespace TransactionServices.Mapping
                 .ForMember(dest => dest.CurrencyCode, opts => opts.MapFrom(src => src.CurrencyCode))
                 .ForMember(dest => dest.TransactionDate, opts => opts.MapFrom(src => src.TransactionDate))
                 .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status)).ReverseMap();
+
+            CreateMap<TransactionPayload, Transactions>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.TransactionId, opts => opts.MapFrom(src => src.TransactionId))
+                .ForMember(dest => dest.Amount, opts => opts.MapFrom(src => src.Amount))
+                .ForMember(dest => dest.CurrencyCode, opts => opts.MapFrom(src => src.CurrencyCode))
+                .ForMember(dest => dest.TransactionDate, opts => opts.MapFrom(src => src.TransactionDate))
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status)).ReverseMap();
         }
     }
 }
