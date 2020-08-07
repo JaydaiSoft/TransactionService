@@ -31,7 +31,7 @@ namespace TransactionServices.Mapping
             CreateMap<Transactions, TransactionItem>()
                 .ForMember(dest => dest.TransactionId, opt => opt.MapFrom(src => src.TransactionId))
                 .ForMember(dest => dest.Payment, opts => opts.MapFrom(src => src.Amount.ToString()+src.CurrencyCode))
-                .ForMember(dest => dest.FullStatus, opts => opts.MapFrom(src => src.Status)).ReverseMap();
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.Status)).ReverseMap();
         }
     }
 }

@@ -18,6 +18,6 @@ namespace TransactionServices.Model.ViewModel
     {
         public string TransactionId { get; set; }
         public string Payment { get; set; }
-        public string FullStatus { get; set; }
+        public string Status { get; set; }
     }
 }
