@@ -9,6 +9,7 @@ namespace TransactionServices.Repository
     public interface ITransactionRepository
     {
         Task<List<Transactions>> GetAllTransactions();
+        Task<List<Transactions>> GetAllTransactions(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO);
         Task<int> UploadTransaction(List<Transactions> transactions);
         void Commit();
     }

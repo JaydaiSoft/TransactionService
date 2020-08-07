@@ -73,5 +73,24 @@ namespace TransactionServices.Controllers
 
             return responseModel;
         }
+
+        [HttpGet, Route("{KeySearch}/{KeyValue}/{transDateFrom}/{transDateTO}")]
+        public async Task<ActionResult> GetAllTransactions(string KeySearch,string KeyValue,DateTime? transDateFrom, DateTime? transDateTO)
+        {
+            if (transDateFrom.Value > transDateTO.Value)
+                return BadRequest("transDateTO must be greater than transDateFrom");
+            try
+            {
+                TransactionResponsModel responseModel = await transactionService.GetAllTransactionAsync(KeySearch, KeyValue, transDateFrom, transDateTO);
+                if (responseModel.TransactionItems.Count == 0)
+                    return NotFound();
+
+                return Ok(responseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException());
+            }
+        }
     }
 }
