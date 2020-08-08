@@ -110,7 +110,7 @@ namespace TransactionServices
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //Set Nlog DB
-            //NLog.GlobalDiagnosticsContext.Set("NlogDB", DBConnectionString);
+            NLog.GlobalDiagnosticsContext.Set("NlogDB", DBConnectionString);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

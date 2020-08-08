@@ -30,6 +30,7 @@ namespace TransactionServices.Controllers
         [HttpGet, Route("ping")]
         public ActionResult<string> IsAlive()
         {
+            logManager.Instance.Info("Log Ping HealthCheck");
             string message = "Service is OK";
             return message;
         }
@@ -59,15 +60,22 @@ namespace TransactionServices.Controllers
             {
                 responseModel = await transactionService.UploadTransaction(model);
                 if (responseModel.Status == "OK")
+                {
+                    logManager.Instance.Info(responseModel.Message);
                     return Ok(responseModel);
+                }
 
                 if (responseModel.Status == "Failed")
+                {
+                    logManager.Instance.Info("Upload Transaction Failed!!");
                     return BadRequest(responseModel);
+                }
             }
             catch (Exception ex)
             {
                 responseModel.Status = "Error";
                 responseModel.Message = ex.GetBaseException().Message;
+                logManager.Instance.Error(ex.GetBaseException().Message);
                 return StatusCode(500, ex.GetBaseException());
             }
 
@@ -88,12 +96,16 @@ namespace TransactionServices.Controllers
             {
                 TransactionResponsModel responseModel = await transactionService.GetAllTransactionAsync(transactionFilter);
                 if (responseModel.TransactionItems.Count == 0)
+                {
+                    logManager.Instance.Info("Transaction NotFound!!");
                     return NotFound();
+                }
 
                 return Ok(responseModel);
             }
             catch (Exception ex)
             {
+                logManager.Instance.Error(ex.GetBaseException().Message);
                 return StatusCode(500, ex.GetBaseException());
             }
         }
@@ -105,12 +117,17 @@ namespace TransactionServices.Controllers
             {
                 var result = await transactionService.GetCurrency();
                 if (result.Length > 1)
+                {
+                    logManager.Instance.Info("GetCurrency Successfull");
                     return Ok(result);
+                }
 
+                logManager.Instance.Info("Currency NotFound!!");
                 return NotFound(new string[] {""});
             }
             catch (Exception ex)
             {
+                logManager.Instance.Error(ex.GetBaseException().Message);
                 return StatusCode(500, ex.GetBaseException());
             }
         }
