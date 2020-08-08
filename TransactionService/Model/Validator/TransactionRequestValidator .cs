@@ -27,7 +27,17 @@ namespace TransactionServices.Model.Validator
             //RuleFor(request => request.filter)
             //       .Must(collection => collection == null || collection.All(item => (!string.IsNullOrEmpty(item.Status) && item.Status.Length == 1)))
             //       .WithMessage("Status is mandatory.");
-
+            RuleSet("GetAllTransactions", () =>
+            {
+                RuleFor(request => request.TransactionFilter)
+                    .Must(request => !string.IsNullOrEmpty(request.CurrencyCode)).WithMessage("CurrencyCode is mandatory.");
+                RuleFor(request => request.TransactionFilter)
+                    .Must(request => !string.IsNullOrEmpty(request.TransactionStatus)).WithMessage("TransactionStatus is mandatory.");
+                RuleFor(request => request.TransactionFilter.TransDateFrom).NotEmpty().WithMessage("TransDateFrom is Required");
+                RuleFor(request => request.TransactionFilter.TransDateTO).NotEmpty().WithMessage("TransDateTO is Required")
+                    .GreaterThan(request => request.TransactionFilter.TransDateFrom)
+                    .WithMessage("TransDateFrom must after Start date").When(request => request.TransactionFilter.TransDateFrom != DateTime.MinValue);
+            });
             //RuleFor(request => request.TransactionFilter)
             //    .Must(request => !string.IsNullOrEmpty(request.CurrencyCode)).WithMessage("CurrencyCode is mandatory.");
             //RuleFor(request => request.TransactionFilter)
