@@ -11,5 +11,6 @@ namespace TransactionServices.Service
         Task<TransactionResponsModel> GetAllTransactionAsync();
         Task<TransactionResponsModel> GetAllTransactionAsync(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO);
         Task<TransactionResponsModel> UploadTransaction(TransactionRequestModel requestModel);
+        Task<string[]> GetCurrency();
     }
 }

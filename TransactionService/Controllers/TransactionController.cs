@@ -92,5 +92,22 @@ namespace TransactionServices.Controllers
                 return StatusCode(500, ex.GetBaseException());
             }
         }
+
+        [HttpGet, Route("Currency")]
+        public async Task<ActionResult> GetCurrency()
+        {
+            try
+            {
+                var result = await transactionService.GetCurrency();
+                if (result.Length > 1)
+                    return Ok(result);
+
+                return NotFound(new string[] {""});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException());
+            }
+        }
     }
 }

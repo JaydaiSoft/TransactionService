@@ -11,6 +11,7 @@ namespace TransactionServices.Repository
         Task<List<Transactions>> GetAllTransactions();
         Task<List<Transactions>> GetAllTransactions(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO);
         Task<int> UploadTransaction(List<Transactions> transactions);
+        Task<string[]> GetCurrency();
         void Commit();
     }
 }

@@ -40,7 +40,7 @@ namespace TransactionServices.Service
             return response;
         }
 
-        public async Task<TransactionResponsModel> GetAllTransactionAsync(string KeySearch,string KeyValue, DateTime? transDateFrom, DateTime? transDateTO)
+        public async Task<TransactionResponsModel> GetAllTransactionAsync(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO)
         {
             TransactionResponsModel response = new TransactionResponsModel();
             try
@@ -87,13 +87,13 @@ namespace TransactionServices.Service
 
         private List<Transactions> ConvertTransactionStatus(List<Transactions> enitityModel)
         {
-            foreach(var model in enitityModel)
+            foreach (var model in enitityModel)
             {
-                if(model.Status == "Approved")
+                if (model.Status == "Approved")
                 {
                     model.Status = "A";
                 }
-                else if(model.Status == "Failed" || model.Status == "Rejected")
+                else if (model.Status == "Failed" || model.Status == "Rejected")
                 {
                     model.Status = "R";
                 }
@@ -103,6 +103,25 @@ namespace TransactionServices.Service
                 }
             }
             return enitityModel;
+        }
+
+        public async Task<string[]> GetCurrency()
+        {
+            string[] currency_arr = new string[1];
+            try
+            {
+                var result = await _repository.GetCurrency();
+                if (result.Length > 0)
+                {
+                    currency_arr = new string[result.Length];
+                    currency_arr = result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return currency_arr;
         }
     }
 }

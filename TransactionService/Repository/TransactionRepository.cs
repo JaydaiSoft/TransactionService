@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,11 @@ namespace TransactionServices.Repository
             await context.TransactionEntity.AddRangeAsync(transactions);
             var success = await context.SaveChangesAsync();
             return success;
+        }
+
+        public async Task<string[]> GetCurrency()
+        {
+            return await context.TransactionEntity.Select(q => q.CurrencyCode).Distinct().OrderBy(o => o).ToArrayAsync();
         }
 
         public void Commit()
