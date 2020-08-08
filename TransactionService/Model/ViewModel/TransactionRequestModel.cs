@@ -7,11 +7,7 @@ namespace TransactionServices.Model.ViewModel
 {
     public class TransactionRequestModel
     {
-        public DateTime FromTransactionDate { get; set; }
-        public DateTime ToTransactionDate { get; set; }
-        public string CurrencyCode { get; set; }
-        public string Status { get; set; }
-        public string KeySearch { get; set; }
+        public TransactionFilter TransactionFilter { get; set; }
         public List<TransactionPayload> TransactionPayloads { get; set; }
     }
 
@@ -22,5 +18,13 @@ namespace TransactionServices.Model.ViewModel
         public string CurrencyCode { get; set; }
         public DateTime TransactionDate { get; set; }
         public string Status { get; set; }
+    }
+
+    public class TransactionFilter
+    {
+        public string CurrencyCode { get; set; }
+        public string TransactionStatus { get; set; }
+        public DateTime TransDateFrom { get; set; }
+        public DateTime TransDateTO { get; set; }
     }
 }

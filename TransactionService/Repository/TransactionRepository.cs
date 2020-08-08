@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TransactionServices.Model.Entity;
+using TransactionServices.Model.ViewModel;
 
 namespace TransactionServices.Repository
 {
@@ -24,21 +25,19 @@ namespace TransactionServices.Repository
             return await context.TransactionEntity.ToListAsync();
         }
 
-        public async Task<List<Transactions>> GetAllTransactions(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO)
+        public async Task<List<Transactions>> GetAllTransactions(TransactionFilter transactionFilter)
         {
             IQueryable<Transactions> result = context.TransactionEntity;
-            if (KeySearch == "CurrencyCode")
+            if (!string.IsNullOrEmpty(transactionFilter.CurrencyCode))
             {
-                result = result.Where(q => q.CurrencyCode == KeyValue);
+                result = result.Where(q => q.CurrencyCode == transactionFilter.CurrencyCode);
             }
-            else if (KeySearch == "Status")
+            if (!string.IsNullOrEmpty(transactionFilter.TransactionStatus))
             {
-                result = result.Where(q => q.Status == KeyValue);
+                result = result.Where(q => q.Status == transactionFilter.TransactionStatus);
             }
-            else if (KeySearch == "TransDate")
-            {
-                result = result.Where(q => q.TransactionDate >= transDateFrom.Value && q.TransactionDate <= transDateTO.Value);
-            }
+            result = result.Where(q => q.TransactionDate >= transactionFilter.TransDateFrom && q.TransactionDate <= transactionFilter.TransDateTO);
+
             return await result.ToListAsync();
         }
 

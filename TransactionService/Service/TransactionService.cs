@@ -40,12 +40,12 @@ namespace TransactionServices.Service
             return response;
         }
 
-        public async Task<TransactionResponsModel> GetAllTransactionAsync(string KeySearch, string KeyValue, DateTime? transDateFrom, DateTime? transDateTO)
+        public async Task<TransactionResponsModel> GetAllTransactionAsync(TransactionFilter transactionFilter)
         {
             TransactionResponsModel response = new TransactionResponsModel();
             try
             {
-                var result = await _repository.GetAllTransactions(KeySearch, KeyValue, transDateFrom, transDateTO);
+                var result = await _repository.GetAllTransactions(transactionFilter);
                 response.TransactionItems = _mapper.Map<List<Transactions>, List<TransactionItem>>(result);
             }
             catch (Exception ex)

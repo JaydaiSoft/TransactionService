@@ -16,6 +16,7 @@ namespace TransactionServices.Model.ViewModel
 
     public class TransactionItem
     {
+        public string TransactionDate { get; set; }
         public string TransactionId { get; set; }
         public string Payment { get; set; }
         public string Status { get; set; }

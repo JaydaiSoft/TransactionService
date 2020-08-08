@@ -34,7 +34,7 @@ namespace TransactionServices.Controllers
             return message;
         }
 
-        [HttpGet, Route("transactions")]
+        [HttpGet, Route("All")]
         public async Task<ActionResult> GetAllTransactions()
         {
             try
@@ -74,14 +74,19 @@ namespace TransactionServices.Controllers
             return responseModel;
         }
 
-        [HttpGet, Route("{KeySearch}/{KeyValue}/{transDateFrom}/{transDateTO}")]
-        public async Task<ActionResult> GetAllTransactions(string KeySearch,string KeyValue,DateTime? transDateFrom, DateTime? transDateTO)
+        [HttpGet]
+        public async Task<ActionResult> GetAllTransactions([FromQuery] string CurrencyCode, [FromQuery] string TransactionStatus, 
+            [FromQuery] DateTime transDateFrom, [FromQuery] DateTime transDateTO)
         {
-            if (transDateFrom.Value > transDateTO.Value)
-                return BadRequest("transDateTO must be greater than transDateFrom");
+            TransactionFilter transactionFilter = new TransactionFilter();
+            transactionFilter.CurrencyCode = CurrencyCode;
+            transactionFilter.TransactionStatus = TransactionStatus;
+            transactionFilter.TransDateFrom = transDateFrom;
+            transactionFilter.TransDateTO = transDateTO;
+
             try
             {
-                TransactionResponsModel responseModel = await transactionService.GetAllTransactionAsync(KeySearch, KeyValue, transDateFrom, transDateTO);
+                TransactionResponsModel responseModel = await transactionService.GetAllTransactionAsync(transactionFilter);
                 if (responseModel.TransactionItems.Count == 0)
                     return NotFound();
 
